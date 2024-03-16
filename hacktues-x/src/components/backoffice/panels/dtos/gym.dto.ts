@@ -1,5 +1,5 @@
-import type Thumbnail from 'flowbite-svelte/Thumbnail.svelte';
 import type { Company } from './company.interface';
+import type { ThumbnailPic } from './thumbnail.interface';
 
 export interface GymDTO {
 	id: number;
@@ -11,5 +11,5 @@ export interface GymDTO {
 	company: Company;
 	departments: string[];
 	tags: string[];
-	thumbnail: Thumbnail;
+	thumbnail: ThumbnailPic;
 }

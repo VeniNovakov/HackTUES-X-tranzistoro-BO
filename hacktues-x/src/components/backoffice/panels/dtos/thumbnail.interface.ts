@@ -1,4 +1,4 @@
-export interface Thumbnail {
+export interface ThumbnailPic {
 	id: number;
 	key: string;
 	url: string;

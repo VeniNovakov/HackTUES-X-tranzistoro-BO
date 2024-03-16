@@ -1,19 +1,13 @@
 <script>
 	import { page } from '$app/stores';
-	import { Button, Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
+	import { Button } from 'flowbite-svelte';
 	import {
-		ChartSolid,
-		GridSolid,
 		MailBoxSolid,
-		UserSolid,
-		ArrowRightToBracketSolid,
 		LockOpenOutline,
 		CirclePlusOutline,
 		AddressBookOutline
 	} from 'flowbite-svelte-icons';
 	$: activeUrl = $page.url.pathname;
-	import { BASEURL } from '$lib/env';
-	import axiosWithRetry from '../../../utility/fetchWIthRetry';
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar } from 'flowbite-svelte';
 	import { CONTROL_PANEL_OPTIONS } from '../../../stores/enums/control-panel.enum';
 	import { panelView } from '../../../stores/control.store';
@@ -62,6 +56,15 @@
 						class="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
 					/>
 					Add new gym
+				</NavLi>
+			</Button>
+
+			<Button on:click={() => handleView(CONTROL_PANEL_OPTIONS.EDIT_GYMS)}>
+				<NavLi>
+					<CirclePlusOutline
+						class="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+					/>
+					Edit gyms
 				</NavLi>
 			</Button>
 

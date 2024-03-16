@@ -1,6 +1,7 @@
 <script>
 	import { panelView } from '../../stores/control.store';
 	import { CONTROL_PANEL_OPTIONS } from '../../stores/enums/control-panel.enum';
+	import EditGyms from './panels/actions/Edit-gyms.svelte';
 	import NewGym from './panels/actions/New-gym.svelte';
 	import Profile from './panels/actions/Profile.svelte';
 	import ViewGyms from './panels/actions/View-gyms.svelte';
@@ -18,4 +19,7 @@
 {/if}
 {#if $panelView === CONTROL_PANEL_OPTIONS.VIEW_GYMS}
 	<ViewGyms />
+{/if}
+{#if $panelView === CONTROL_PANEL_OPTIONS.EDIT_GYMS}
+	<EditGyms />
 {/if}

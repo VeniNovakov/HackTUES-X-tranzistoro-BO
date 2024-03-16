@@ -20,9 +20,10 @@
 	import { goto } from '$app/navigation';
 	import { panelView } from '../../../../stores/control.store';
 	import { CONTROL_PANEL_OPTIONS } from '../../../../stores/enums/control-panel.enum';
+	import type { GymInfo } from '../dtos/Gym-info.interface';
+	import type { Company } from '../dtos/company.interface';
 	let files = []; // FileList type
 	let departments: string[] = [];
-	// let classes =["a","w","c","d","b" ]
 	let tags: string[] = [];
 	onMount(async () => {
 		axios.get(`${BASEURL}/facilities/tags`).then((resp) => (tags = resp.data));
@@ -30,35 +31,24 @@
 	});
 	let group = 1;
 
-	interface NewGymInfo {
-		name: string;
-		description: string;
-		streetName: string;
-		tags: string[];
-		company: string;
-		classes: string[];
-		departments: string[];
-	}
-
-	let selectedInfo: NewGymInfo = {
+	let selectedInfo: GymInfo = {
 		name: '',
 		description: ' ',
 		streetName: ' ',
 		tags: [],
-		company: '',
-		classes: [],
+		company: {} as Company,
 		departments: []
 	};
 
 	interface InfoSelection {
-		type: 'tags' | 'company' | 'departments' | 'name' | 'description' | 'streetName';
+		type: 'tags' | 'departments' | 'name' | 'description' | 'streetName';
 	}
 
 	const handleSelection = (selection: InfoSelection, obj: string) => {
 		if (
-			selection.type === 'company' ||
 			selection.type === 'name' ||
-			selection.type === 'description'
+			selection.type === 'description' ||
+			selection.type === 'streetName'
 		) {
 			selectedInfo[selection.type] = obj;
 		} else {
@@ -76,7 +66,14 @@
 		const formData = new FormData();
 		const latitude: number = $lat;
 		const longitude: number = $lon;
-
+		if (!longitude || !latitude) {
+			alert('You havent chosen a location');
+			return;
+		}
+		if (files?.length < 3) {
+			alert('3 pictures required');
+			return;
+		}
 		formData.append('name', selectedInfo.name);
 		formData.append('description', selectedInfo.description);
 		formData.append('lat', latitude.toString());
@@ -91,6 +88,9 @@
 		for (let i = 0; i < selectedInfo.tags.length; i++) {
 			formData.append('tags', selectedInfo.tags[i]);
 		}
+		for (let i = 0; i < selectedInfo.departments.length; i++) {
+			formData.append('departments', selectedInfo.departments[i]);
+		}
 		axiosWithRetry
 			.post(`${BASEURL}/facilities`, formData, {
 				headers: {
@@ -98,6 +98,7 @@
 				}
 			})
 			.then((resp) => {
+				console.log(resp);
 				if (resp.status === 201) {
 					panelView.update(() => {
 						return CONTROL_PANEL_OPTIONS.MAIN;
@@ -139,16 +140,6 @@
 					>
 						{tag}
 					</Checkbox>
-				{/each}
-			</Dropdown>
-
-			<Button class="text-slate-500">Departments</Button>
-			<Dropdown class="z-50 max-h-24 overflow-scroll">
-				{#each departments as department}
-					<Checkbox
-						on:click={() => handleSelection({ type: 'departments' }, department)}
-						checked={selectedInfo.departments.includes(department)}>{department}</Checkbox
-					>
 				{/each}
 			</Dropdown>
 		</div>
