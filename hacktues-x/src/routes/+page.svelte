@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Auth from "../components/auth/Auth.svelte";
-
+	import Auth from '../components/auth/Auth.svelte';
 </script>
 
 <div id="parent-container">
@@ -8,7 +7,7 @@
 </div>
 
 <style lang="scss">
-  	#parent-container {
+	#parent-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;

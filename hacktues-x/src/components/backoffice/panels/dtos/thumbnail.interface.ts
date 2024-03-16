@@ -1,5 +1,5 @@
-export interface Thumbnail{
-  id:number;
-  key: string;
-  url: string;
+export interface Thumbnail {
+	id: number;
+	key: string;
+	url: string;
 }
