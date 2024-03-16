@@ -1,0 +1,6 @@
+export enum CONTROL_PANEL_OPTIONS {
+  MAIN,
+  NEW_GYM,
+  PROFILE,
+  VIEW_GYMS
+}
